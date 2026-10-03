@@ -1,0 +1,23 @@
+name: Despliegue a Surge
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar surge
+        run: npm install --global surge
+
+      - name: Desplegar a surge.sh
+        run: surge ./ yojairo-itla-parcial1.surge.sh --token ${{ secrets.SURGE_TOKEN }}
